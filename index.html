@@ -5871,9 +5871,10 @@ async function loadAdminDashboard() {
     const orders = (await getDocs(collection(window.firebaseDb, 'orders'))).docs.map(d => d.data());
     const customers = (await getDocs(collection(window.firebaseDb, 'users'))).docs.map(d => d.data());
     
-    const revenue = orders.reduce((s, o) => s + (parseFloat(o.total) || 0), 0);
+    const activeOrders = orders.filter(o => (o.status || '').toLowerCase() !== 'cancelled');
+    const revenue = activeOrders.reduce((s, o) => s + (parseFloat(o.total) || 0), 0);
     document.getElementById('stat-revenue').textContent = '₹' + Math.round(revenue).toLocaleString('en-IN');
-    document.getElementById('stat-orders').textContent = orders.length;
+    document.getElementById('stat-orders').textContent = activeOrders.length;
     document.getElementById('stat-products').textContent = products.length;
     document.getElementById('stat-customers').textContent = customers.length;
 
@@ -5932,7 +5933,7 @@ function renderRevenueChart(orders) {
   const revenue = days.map((_, i) => {
     const target = new Date(); target.setDate(target.getDate() - (6 - i));
     const dateStr = target.toDateString();
-    return orders.filter(o => new Date(o.createdAt).toDateString() === dateStr).reduce((s, o) => s + (parseFloat(o.total) || 0), 0);
+    return orders.filter(o => new Date(o.createdAt).toDateString() === dateStr && (o.status || '').toLowerCase() !== 'cancelled').reduce((s, o) => s + (parseFloat(o.total) || 0), 0);
   });
   if (revenueChart) revenueChart.destroy();
   revenueChart = new Chart(ctx, {
@@ -6360,7 +6361,10 @@ async function loadAdminOrders() {
 async function updateOrderStatus(orderId, status) {
   const { doc, updateDoc } = window.firebaseFns;
   await updateDoc(doc(window.firebaseDb, 'orders', orderId), { status });
-  showNotification('✓ Order status updated', 'success');
+  const msg = status === 'cancelled' ? '✓ Order cancelled — Revenue updated' : '✓ Order status updated';
+  showNotification(msg, 'success');
+  // Dashboard revenue live update karo
+  setTimeout(() => loadAdminDashboard(), 600);
 }
 
 // ══════════════════════════════════════════════════
