@@ -32,6 +32,7 @@
   window.firebaseDb = db;
   window.firebaseStorage = storage;
   window.googleProvider = new GoogleAuthProvider();
+  window._globalWaNumber = '919664632460'; // Fixed WhatsApp number
   window.firebaseFns = {
     createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged,
     GoogleAuthProvider, signInWithPopup,
@@ -4674,7 +4675,6 @@ document.addEventListener('DOMContentLoaded',()=>{
         <div class="admin-nav-item" onclick="switchAdminSection('banners')"><i class="fas fa-image"></i> Banners & Hero</div>
         <div class="admin-nav-item" onclick="switchAdminSection('storeinfo')"><i class="fas fa-store"></i> Store Info</div>
         <div class="admin-nav-item" onclick="switchAdminSection('founder')"><i class="fas fa-user-tie"></i> About Founder</div>
-        <div class="admin-nav-item" onclick="switchAdminSection('password')"><i class="fas fa-lock"></i> Change Password</div>
       </div>
       <div class="admin-logout">
         <button class="admin-btn secondary" style="width:100%" onclick="adminLogout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
@@ -4903,7 +4903,7 @@ document.addEventListener('DOMContentLoaded',()=>{
                   </div>
                   <div class="admin-form-group">
                     <label>WhatsApp Number for "Buy Now" (with country code)</label>
-                    <input type="text" id="product-whatsapp" placeholder="917226928994" value="917226928994">
+                    <input type="text" id="product-whatsapp" placeholder="919664632460" value="919664632460">
                     <small style="font-size:11px;color:var(--white-dim);margin-top:4px;display:block;">Customer clicks "Buy Now" → opens WhatsApp chat with this number</small>
                   </div>
                 </div>
@@ -5087,7 +5087,7 @@ document.addEventListener('DOMContentLoaded',()=>{
               </p>
               <div class="admin-form-group" style="margin-bottom:12px;">
                 <label>WhatsApp Number (with country code)</label>
-                <input type="text" id="global-wa-number" placeholder="917226928994" style="letter-spacing:1px;">
+                <input type="text" id="global-wa-number" placeholder="919664632460" style="letter-spacing:1px;">
               </div>
               <button class="admin-btn" onclick="saveGlobalWaNumber()"><i class="fab fa-whatsapp"></i> Save WhatsApp Number</button>
               <div id="wa-save-msg" style="font-size:11px;color:#22c55e;margin-top:8px;min-height:16px;"></div>
@@ -5134,8 +5134,8 @@ document.addEventListener('DOMContentLoaded',()=>{
                 <div class="admin-form-group"><label class="admin-form-label">Hero Sub Tagline</label><input class="admin-form-input" id="si-hero-sub" placeholder="Luxury Redefined · Crafted For You" style="width:100%;"></div>
                 <div class="admin-form-group">
                   <label class="admin-form-label">📱 WhatsApp Number — Buy Now Button (country code, no +)</label>
-                  <input class="admin-form-input" id="si-wa-number" placeholder="917226928994" style="width:100%;">
-                  <small style="color:#888;font-size:11px;margin-top:3px;display:block;">e.g. 917226928994 — Customer Buy Now → this number opens</small>
+                  <input class="admin-form-input" id="si-wa-number" placeholder="919664632460" style="width:100%;">
+                  <small style="color:#888;font-size:11px;margin-top:3px;display:block;">e.g. 919664632460 — Customer Buy Now → this number opens</small>
                 </div>
                 <div class="admin-form-group"><label class="admin-form-label">Brand Story (Homepage)</label><textarea class="admin-form-textarea" id="si-brand-story" placeholder="Your brand story..." style="width:100%;min-height:80px;"></textarea></div>
                 <div class="admin-form-group"><label class="admin-form-label">Instagram URL</label><input class="admin-form-input" type="url" id="si-instagram" placeholder="https://instagram.com/yourwonderland" style="width:100%;"></div>
@@ -5175,32 +5175,6 @@ document.addEventListener('DOMContentLoaded',()=>{
                   <button class="admin-btn secondary" onclick="loadFounderSettings()"><i class="fas fa-sync"></i> Reload</button>
                 </div>
                 <div id="founder-save-msg" style="font-size:12px;min-height:18px;color:#22c55e;font-weight:700;"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- ══ CHANGE PASSWORD ══ -->
-        <div class="admin-section" id="admin-password">
-          <div style="max-width:480px">
-            <div class="admin-table-wrapper">
-              <div class="admin-table-header"><span class="admin-table-title">🔒 Change Admin Password</span></div>
-              <div style="padding:24px;display:flex;flex-direction:column;gap:13px;">
-                <p style="font-size:13px;color:#555;line-height:1.7;background:rgba(122,144,168,0.08);border-radius:8px;padding:12px;">New password nakho → website band karo → dobara open karo → new password thi login thase.</p>
-                <div class="admin-form-group">
-                  <label class="admin-form-label">Current Password</label>
-                  <input class="admin-form-input" type="password" id="curr-pass" placeholder="Current password" style="width:100%;">
-                </div>
-                <div class="admin-form-group">
-                  <label class="admin-form-label">New Password</label>
-                  <input class="admin-form-input" type="password" id="new-pass" placeholder="Min 8 characters" style="width:100%;">
-                </div>
-                <div class="admin-form-group">
-                  <label class="admin-form-label">Confirm New Password</label>
-                  <input class="admin-form-input" type="password" id="confirm-pass" placeholder="Repeat new password" style="width:100%;">
-                </div>
-                <button class="admin-btn" onclick="changeAdminPassword()"><i class="fas fa-key"></i> Change Password</button>
-                <div id="pass-change-msg" style="font-size:13px;min-height:18px;font-weight:700;"></div>
               </div>
             </div>
           </div>
@@ -6004,7 +5978,7 @@ function showProductForm(product = null) {
   document.getElementById('product-description').value = product?.description || '';
   document.getElementById('product-features').value = product?.features || '';
   document.getElementById('product-featured').value = product?.featured || 'none';
-  document.getElementById('product-whatsapp').value = product?.whatsappNumber || window._globalWaNumber || '917226928994';
+  document.getElementById('product-whatsapp').value = product?.whatsappNumber || window._globalWaNumber || '919664632460';
   adminProductImages = product?.images || [];
   renderAdminImagePreviews();
 
@@ -6115,7 +6089,7 @@ async function saveProduct() {
     description: document.getElementById('product-description').value,
     features: document.getElementById('product-features').value,
     featured: document.getElementById('product-featured').value,
-    whatsappNumber: document.getElementById('product-whatsapp').value || window._globalWaNumber || '917226928994',
+    whatsappNumber: document.getElementById('product-whatsapp').value || window._globalWaNumber || '919664632460',
     images: adminProductImages.slice(0, 5), // ★ max 5
     updatedAt: new Date().toISOString()
   };
@@ -6680,7 +6654,7 @@ async function placeOrder() {
   const orderId = 'YW' + Date.now();
 
   if (selectedPayment === 'whatsapp') {
-    const waNum = window._globalWaNumber || '917226928994';
+    const waNum = window._globalWaNumber || '919664632460';
     const items = cart.map(i => `${i.name} (${i.size||''}${i.color?' · '+i.color:''}) x${i.qty} = ₹${(i.price*i.qty).toFixed(0)}`).join('\n');
     const msg = encodeURIComponent(`🛍️ NEW ORDER — Your Wonderland\n\nOrder ID: #${orderId}\nName: ${name}\nPhone: ${phone}\nAddress: ${address}, ${city} - ${pin}\n\nItems:\n${items}\n\nTotal: ₹${total.toFixed(0)}\nPayment: WhatsApp Order`);
     window.open('https://wa.me/' + waNum + '?text=' + msg, '_blank');
@@ -6747,7 +6721,7 @@ function renderProductDetail(p) {
   setTimeout(() => {
     const actions = document.querySelector('.pd-actions');
     if (actions && !document.getElementById('pd-buy-now-btn')) {
-      const waNum = p.whatsappNumber || window._globalWaNumber || '917226928994';
+      const waNum = p.whatsappNumber || window._globalWaNumber || '919664632460';
       const waBtn = document.createElement('button');
       waBtn.id = 'pd-buy-now-btn';
       waBtn.style.cssText = 'background:linear-gradient(135deg,#25d366,#128c7e);color:#fff;border:none;padding:16px 20px;border-radius:4px;font-family:var(--font-body);font-size:13px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:8px;transition:all 0.3s;';
@@ -6882,7 +6856,7 @@ function renderProductCard(p) {
   const discount = p.originalPrice && p.price && p.originalPrice > p.price
     ? Math.round((1 - p.price / p.originalPrice) * 100) : 0;
   const isWishlisted = (wishlist||[]).some(w => w.id === p.id);
-  const wa = p.whatsappNumber || window._globalWaNumber || '917226928994';
+  const wa = p.whatsappNumber || window._globalWaNumber || '919664632460';
   const img = p.images && p.images.length && p.images[0]
     ? `<img src="${p.images[0]}" alt="${p.name}" loading="lazy" style="width:100%;height:100%;object-fit:cover;">`
     : `<div style="display:flex;align-items:center;justify-content:center;height:100%;font-family:'Cormorant Garamond',serif;font-size:48px;color:rgba(72,89,107,0.2);">YW</div>`;
@@ -6936,7 +6910,7 @@ function buyNowCard(pid, wa) {
   openWA(p, wa, '', '');
 }
 function openWA(p, wa, size, color) {
-  const num = wa || window._globalWaNumber || '917226928994';
+  const num = '919664632460'; // Fixed number — always this
   const msg = encodeURIComponent(
     `Hi! I want to order:\n\n` +
     `Product: ${p.name}\n` +
@@ -6996,7 +6970,7 @@ function openProduct(productId) {
   const sizes = Array.isArray(p.sizes) ? p.sizes : (p.sizes ? p.sizes.split(',').map(s=>s.trim()) : []);
   const feats = p.features ? p.features.split('\n').filter(f=>f.trim()) : [];
   const disc = p.originalPrice&&p.originalPrice>p.price ? Math.round((1-p.price/p.originalPrice)*100) : 0;
-  const wa = p.whatsappNumber||window._globalWaNumber||'917226928994';
+  const wa = p.whatsappNumber||window._globalWaNumber||'919664632460';
   const reviews = JSON.parse(localStorage.getItem('rev_'+p.id)||'[]');
 
   pp.innerHTML = `<div style="padding-top:106px;min-height:100vh;background:#EFEAE4;">
@@ -7210,7 +7184,7 @@ function checkPendingBuyNow() {
   window._pendingBuyNow = null;
   const p = (window.allProducts||[]).find(x=>x.id===pending.pid);
   if (!p) return;
-  setTimeout(()=> openWA(p, pending.wa||window._globalWaNumber||'917226928994','',''), 600);
+  setTimeout(()=> openWA(p, pending.wa||window._globalWaNumber||'919664632460','',''), 600);
 }
 
 // Upload helper
