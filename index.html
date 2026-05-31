@@ -10,7 +10,7 @@
 <!-- Firebase SDKs -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-  import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+  import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, GoogleAuthProvider, signInWithPopup, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
   import { getFirestore, collection, addDoc, getDocs, doc, setDoc, getDoc, updateDoc, deleteDoc, query, orderBy, where, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
   import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
 
@@ -35,7 +35,7 @@
   window._globalWaNumber = '919664632460'; // Fixed WhatsApp number
   window.firebaseFns = {
     createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged,
-    GoogleAuthProvider, signInWithPopup,
+    GoogleAuthProvider, signInWithPopup, sendPasswordResetEmail,
     collection, addDoc, getDocs, doc, setDoc, getDoc, updateDoc, deleteDoc, query, orderBy, where, onSnapshot, ref, uploadBytes, getDownloadURL, deleteObject
   };
 
@@ -66,7 +66,7 @@
         if (s.storeName) document.getElementById('site-title').textContent = s.storeName;
         if (s.heroTagline) document.getElementById('hero-tagline').textContent = s.heroTagline;
         if (s.heroSubtagline) document.getElementById('hero-sub-tagline').textContent = s.heroSubtagline;
-        if (s.brandStory) document.getElementById('brand-story-text').textContent = s.brandStory;
+        if (s.brandStory) { const bs = document.getElementById('brand-story-text'); if (bs) bs.textContent = s.brandStory; }
         if (s.logoUrl) { document.getElementById('nav-logo-img').src = s.logoUrl; document.getElementById('nav-logo-img').style.display='block'; }
         if (s.instagramUrl) document.getElementById('footer-instagram').href = s.instagramUrl;
         if (s.bannerActive !== undefined) {
@@ -4028,13 +4028,6 @@ document.addEventListener('DOMContentLoaded',()=>{
             Founder &amp; Creative Director
           </p>
           <p id="hp-founder-bio-display" style="font-family:'Cormorant Garamond',serif;font-size:18px;line-height:1.9;color:#555;font-weight:300;max-width:500px;margin-bottom:30px;border-left:3px solid var(--gold);padding-left:20px;font-style:italic;">The story of Your Wonderland begins with a single belief — that fashion should feel personal, powerful, and authentically you.</p>
-          <div style="display:flex;gap:28px;margin-bottom:30px;padding:18px 22px;background:rgba(101,90,124,0.05);border-radius:12px;border:1px solid rgba(101,90,124,0.1);">
-            <div style="text-align:center;"><div style="font-family:'Cormorant Garamond',serif;font-size:28px;color:var(--crimson);font-weight:600;line-height:1;">500+</div><div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#888;margin-top:4px;">Styles</div></div>
-            <div style="width:1px;background:rgba(101,90,124,0.15);"></div>
-            <div style="text-align:center;"><div style="font-family:'Cormorant Garamond',serif;font-size:28px;color:var(--crimson);font-weight:600;line-height:1;">10K+</div><div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#888;margin-top:4px;">Customers</div></div>
-            <div style="width:1px;background:rgba(101,90,124,0.15);"></div>
-            <div style="text-align:center;"><div style="font-family:'Cormorant Garamond',serif;font-size:28px;color:var(--crimson);font-weight:600;line-height:1;">4.9★</div><div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#888;margin-top:4px;">Rating</div></div>
-          </div>
           <div style="display:flex;gap:14px;flex-wrap:wrap;align-items:center;">
             <a id="hp-founder-instagram-link" href="#" target="_blank" style="display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--crimson),var(--crimson-dark));color:#fff;padding:12px 24px;border-radius:50px;font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;text-decoration:none;transition:all 0.3s cubic-bezier(0.34,1.56,0.64,1);box-shadow:0 4px 18px rgba(101,90,124,0.3);"
               onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 8px 28px rgba(101,90,124,0.45)'"
@@ -4425,23 +4418,7 @@ document.addEventListener('DOMContentLoaded',()=>{
             font-family:'Cormorant Garamond',serif;
           ">The story of Your Wonderland begins with a single belief — that fashion should feel personal, powerful, and authentically you.</p>
 
-          <!-- Stats row -->
-          <div style="display:flex;gap:32px;margin-bottom:28px;padding:20px;background:rgba(122,144,168,0.06);border-radius:12px;">
-            <div class="founder-stat" style="text-align:center;">
-              <div style="font-family:'Cormorant Garamond',serif;font-size:28px;color:#48596B;font-weight:600;line-height:1;">500+</div>
-              <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#888;margin-top:4px;">Styles</div>
-            </div>
-            <div style="width:1px;background:rgba(122,144,168,0.2);"></div>
-            <div class="founder-stat" style="text-align:center;">
-              <div style="font-family:'Cormorant Garamond',serif;font-size:28px;color:#48596B;font-weight:600;line-height:1;">10K+</div>
-              <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#888;margin-top:4px;">Customers</div>
-            </div>
-            <div style="width:1px;background:rgba(122,144,168,0.2);"></div>
-            <div class="founder-stat" style="text-align:center;">
-              <div style="font-family:'Cormorant Garamond',serif;font-size:28px;color:#48596B;font-weight:600;line-height:1;">4.9★</div>
-              <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#888;margin-top:4px;">Rating</div>
-            </div>
-          </div>
+
 
           <!-- Instagram -->
           <div id="founder-social-links" style="display:flex;gap:12px;align-items:center;">
@@ -4614,7 +4591,7 @@ document.addEventListener('DOMContentLoaded',()=>{
     <div>
       <p class="footer-col-title">Account</p>
       <ul class="footer-links">
-        <li><span onclick="openAuthModal()">Login / Sign Up</span></li>
+        <li><span onclick="openAuth()">Login / Sign Up</span></li>
         <li><span onclick="showPage('account')">My Orders</span></li>
         <li><span onclick="showPage('wishlist')">Wishlist</span></li>
       </ul>
@@ -4640,8 +4617,8 @@ document.addEventListener('DOMContentLoaded',()=>{
       <div class="admin-login-logo">YOUR WONDERLAND</div>
       <div class="admin-login-sub">Admin Control Panel</div>
       <div style="margin-bottom:16px">
-        <label style="font-size:9px;letter-spacing:2px;text-transform:uppercase;font-weight:700;color:var(--white-dim);display:block;margin-bottom:8px">Username</label>
-        <input type="text" id="admin-username" class="admin-form-group" style="width:100%;background:rgba(229,217,200,0.9);border:1px solid var(--border);color:var(--white);padding:14px 16px;font-family:var(--font-body);font-size:13px;outline:none;border-radius:2px" placeholder="your.wonderland">
+        <label style="font-size:9px;letter-spacing:2px;text-transform:uppercase;font-weight:700;color:var(--white-dim);display:block;margin-bottom:8px">Admin Email</label>
+        <input type="email" id="admin-username" class="admin-form-group" style="width:100%;background:rgba(229,217,200,0.9);border:1px solid var(--border);color:var(--white);padding:14px 16px;font-family:var(--font-body);font-size:13px;outline:none;border-radius:2px" placeholder="admin@yourwonderland.com">
       </div>
       <div style="margin-bottom:16px">
         <label style="font-size:9px;letter-spacing:2px;text-transform:uppercase;font-weight:700;color:var(--white-dim);display:block;margin-bottom:8px">Password</label>
@@ -4672,6 +4649,7 @@ document.addEventListener('DOMContentLoaded',()=>{
         <div class="admin-nav-item" onclick="switchAdminSection('categories')"><i class="fas fa-tags"></i> Categories</div>
         <div class="admin-nav-item" onclick="switchAdminSection('customers')"><i class="fas fa-users"></i> Customers</div>
         <div class="admin-nav-item" onclick="switchAdminSection('orders')"><i class="fas fa-box"></i> Orders</div>
+        <div class="admin-nav-item" onclick="switchAdminSection('reports')"><i class="fas fa-chart-pie"></i> Reports</div>
         <div class="admin-nav-item" onclick="switchAdminSection('banners')"><i class="fas fa-image"></i> Banners & Hero</div>
         <div class="admin-nav-item" onclick="switchAdminSection('storeinfo')"><i class="fas fa-store"></i> Store Info</div>
         <div class="admin-nav-item" onclick="switchAdminSection('founder')"><i class="fas fa-user-tie"></i> About Founder</div>
@@ -5199,8 +5177,35 @@ let editingProductId = null;
 let currentFilter = { section: '', subcategory: '' };
 let revenueChart, reportChart;
 
-const ADMIN_USER = 'your.wonderland';
-const ADMIN_PASS = 'YOURWONDERLAND.11';
+// ══════════════════════════════════════════════════
+//  ADMIN SECURITY CONFIG (obfuscated — do not expose plaintext credentials)
+// ══════════════════════════════════════════════════
+const _a = atob('SHF4a284aFlLeFZObFczNmIwQjkybVhNZ3d4Mg==');   // ADMIN_UID  (base64)
+const _b = atob('Y2VvQHlvdXJ3b25kZXJsYW5kLnN0b3Jl');           // ADMIN_EMAIL (base64)
+const ADMIN_UID   = _a;
+const ADMIN_EMAIL = _b;
+
+// ── RATE LIMITING — persisted in localStorage so page refresh can't bypass it ──
+const ADMIN_MAX_ATTEMPTS = 5;
+const ADMIN_LOCKOUT_MS   = 15 * 60 * 1000; // 15 minutes
+const _RL_KEY = btoa('yw-rl'); // obfuscated localStorage key
+
+function _getRateLimit() {
+  try {
+    const raw = localStorage.getItem(_RL_KEY);
+    return raw ? JSON.parse(atob(raw)) : { attempts: 0, lockedUntil: 0 };
+  } catch(e) { return { attempts: 0, lockedUntil: 0 }; }
+}
+function _setRateLimit(obj) {
+  try { localStorage.setItem(_RL_KEY, btoa(JSON.stringify(obj))); } catch(e) {}
+}
+function _clearRateLimit() {
+  try { localStorage.removeItem(_RL_KEY); } catch(e) {}
+}
+
+// Legacy in-memory vars kept for compatibility but now backed by localStorage
+let _adminAttempts    = _getRateLimit().attempts;
+let _adminLockedUntil = _getRateLimit().lockedUntil;
 
 // ══════════════════════════════════════════════════
 //  PAGE ROUTING
@@ -5962,6 +5967,92 @@ function renderRevenueChart(orders) {
 }
 
 // ══════════════════════════════════════════════════
+//  ADMIN REPORTS  (Daily / Weekly / Monthly)
+// ══════════════════════════════════════════════════
+async function loadReport(period = 'daily') {
+  // highlight the active period button
+  try {
+    const btns = document.querySelectorAll('#admin-reports button.admin-btn');
+    btns.forEach(b => {
+      const isActive = b.textContent.trim().toLowerCase() === period.toLowerCase();
+      b.classList.toggle('active', isActive);
+      b.classList.toggle('secondary', !isActive);
+    });
+  } catch (e) {}
+
+  // fetch orders (reuse cache if available)
+  let orders = window._allOrders || [];
+  try {
+    if (window.firebaseDb) {
+      const { collection, getDocs } = window.firebaseFns;
+      const snap = await getDocs(collection(window.firebaseDb, 'orders'));
+      orders = [];
+      snap.forEach(d => orders.push({ id: d.id, ...d.data() }));
+      window._allOrders = orders;
+    }
+  } catch (e) { console.log('Report orders load error:', e); }
+
+  // period window
+  const now = new Date();
+  const start = new Date(now);
+  if (period === 'weekly') start.setDate(now.getDate() - 7);
+  else if (period === 'monthly') start.setMonth(now.getMonth() - 1);
+  else start.setHours(0, 0, 0, 0); // daily = today
+
+  const inRange = orders.filter(o => {
+    const d = new Date(o.createdAt || 0);
+    return d >= start && (o.status || '').toLowerCase() !== 'cancelled';
+  });
+
+  const revenue = inRange.reduce((s, o) => s + (parseFloat(o.total) || 0), 0);
+  const count = inRange.length;
+  const avg = count ? Math.round(revenue / count) : 0;
+  const set = (id, val) => { const e = document.getElementById(id); if (e) e.textContent = val; };
+  set('report-revenue', '₹' + Math.round(revenue));
+  set('report-orders', count);
+  set('report-avg', '₹' + avg);
+
+  // best selling products
+  const tally = {};
+  inRange.forEach(o => (o.items || []).forEach(i => {
+    const key = i.name || 'Item';
+    if (!tally[key]) tally[key] = { name: key, qty: 0, revenue: 0 };
+    tally[key].qty += (i.qty || 1);
+    tally[key].revenue += (parseFloat(i.price) || 0) * (i.qty || 1);
+  }));
+  const best = Object.values(tally).sort((a, b) => b.qty - a.qty).slice(0, 8);
+  const tb = document.getElementById('best-selling-tbody');
+  if (tb) tb.innerHTML = best.length
+    ? best.map(b => `<tr><td>${b.name}</td><td>${b.qty}</td><td>₹${Math.round(b.revenue)}</td></tr>`).join('')
+    : `<tr><td colspan="3" style="text-align:center;padding:30px;color:var(--white-dim)">No data yet</td></tr>`;
+
+  // chart
+  const ctx = document.getElementById('report-chart');
+  if (ctx && typeof Chart !== 'undefined') {
+    const buckets = period === 'monthly' ? 30 : (period === 'weekly' ? 7 : 24);
+    const labels = [], data = [];
+    for (let i = buckets - 1; i >= 0; i--) {
+      const d = new Date(now);
+      if (period === 'daily') { d.setHours(now.getHours() - i, 0, 0, 0); labels.push(d.getHours() + ':00'); }
+      else { d.setDate(now.getDate() - i); labels.push(d.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })); }
+      const rev = inRange.filter(o => {
+        const od = new Date(o.createdAt || 0);
+        return period === 'daily'
+          ? od.getHours() === d.getHours() && od.toDateString() === d.toDateString()
+          : od.toDateString() === d.toDateString();
+      }).reduce((s, o) => s + (parseFloat(o.total) || 0), 0);
+      data.push(rev);
+    }
+    if (reportChart) reportChart.destroy();
+    reportChart = new Chart(ctx, {
+      type: 'line',
+      data: { labels, datasets: [{ label: 'Revenue ₹', data, borderColor: '#655A7C', backgroundColor: 'rgba(101,90,124,0.1)', fill: true, tension: 0.4 }] },
+      options: { plugins: { legend: { labels: { color: 'rgba(80,70,90,0.8)' } } }, scales: { y: { ticks: { callback: v => '₹' + v } } } }
+    });
+  }
+}
+
+// ══════════════════════════════════════════════════
 //  ADMIN PRODUCTS
 // ══════════════════════════════════════════════════
 function showProductForm(product = null) {
@@ -6398,10 +6489,10 @@ function toggleMobileMenu() {
 //  INIT
 // ══════════════════════════════════════════════════
 document.addEventListener('DOMContentLoaded', () => {
-  // Check admin auto-login
-  if (localStorage.getItem('yw-admin-auth') === '1') {
-    // don't auto-open admin, just store the flag
-  }
+  // Old admin-auth flag cleaned up — auth is now handled by Firebase only
+  localStorage.removeItem('yw-admin-auth');
+  localStorage.removeItem('yw-admin');
+  localStorage.removeItem('yw-admin-pass');
   
   // Keyboard shortcuts
   document.addEventListener('keydown', e => {
@@ -6738,71 +6829,9 @@ function renderProductDetail(p) {
       };
       actions.appendChild(waBtn);
     }
-    // Inject Reviews section
-    renderProductReviews(p);
     // Inject Related products
     renderRelatedProducts(p);
   }, 200);
-}
-
-function renderProductReviews(p) {
-  const container = document.getElementById('product-detail-container');
-  if (!container) return;
-  let reviewsSection = document.getElementById('pd-reviews-section');
-  if (!reviewsSection) {
-    reviewsSection = document.createElement('div');
-    reviewsSection.id = 'pd-reviews-section';
-    reviewsSection.style.cssText = 'grid-column:1/-1;margin-top:40px;padding-top:40px;border-top:1px solid var(--border)';
-    container.appendChild(reviewsSection);
-  }
-  const savedReviews = JSON.parse(localStorage.getItem('reviews_' + p.id) || '[]');
-  let reviewStars = 5;
-  reviewsSection.innerHTML = `
-    <h3 style="font-family:var(--font-display);font-size:28px;color:var(--white);margin-bottom:20px">Customer Reviews (${savedReviews.length})</h3>
-    <div id="reviews-list-inner" style="display:flex;flex-direction:column;gap:12px;margin-bottom:28px">
-      ${savedReviews.length ? savedReviews.map(r => `
-        <div class="review-card-new">
-          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
-            <span style="font-weight:700;font-size:14px;color:var(--white)">👤 ${r.author}</span>
-            <span style="font-size:11px;color:var(--white-dim)">${r.date}</span>
-          </div>
-          <div style="color:#f59e0b;font-size:14px;margin-bottom:6px">${'⭐'.repeat(r.stars)}</div>
-          <p style="font-size:13px;color:var(--white-dim);line-height:1.7">${r.text}</p>
-        </div>
-      `).join('') : '<p style="color:var(--white-dim);font-style:italic;font-family:var(--font-display);font-size:16px">No reviews yet. Be the first to review!</p>'}
-    </div>
-    <div style="background:rgba(46,36,56,0.5);border:1px solid var(--border);border-radius:8px;padding:22px">
-      <h4 style="font-family:var(--font-display);font-size:20px;color:var(--white);margin-bottom:14px">✍️ Write a Review</h4>
-      <div style="display:flex;gap:4px;margin-bottom:12px" id="star-rating-input">
-        ${[1,2,3,4,5].map(n => `<button class="review-star-btn lit" id="rstar-${p.id}-${n}" onclick="setRev('${p.id}',${n})" style="font-size:24px;opacity:1">⭐</button>`).join('')}
-      </div>
-      <input type="text" id="rev-name-${p.id}" placeholder="Your Name" style="width:100%;background:rgba(229,217,200,0.12);border:1.5px solid var(--border);color:var(--white);padding:11px 14px;border-radius:4px;font-size:13px;font-family:var(--font-body);outline:none;margin-bottom:10px">
-      <textarea id="rev-text-${p.id}" rows="3" placeholder="Share your experience with this product..." style="width:100%;background:rgba(229,217,200,0.12);border:1.5px solid var(--border);color:var(--white);padding:11px 14px;border-radius:4px;font-size:13px;font-family:var(--font-body);outline:none;resize:vertical;margin-bottom:12px"></textarea>
-      <button class="btn-primary btn-sm" onclick="submitReview('${p.id}')"><i class="fas fa-paper-plane"></i> Post Review</button>
-    </div>
-  `;
-  window._reviewStars = window._reviewStars || {};
-  window._reviewStars[p.id] = 5;
-}
-
-function setRev(pid, n) {
-  window._reviewStars = window._reviewStars || {};
-  window._reviewStars[pid] = n;
-  [1,2,3,4,5].forEach(i => { const b = document.getElementById('rstar-' + pid + '-' + i); if (b) b.style.opacity = i <= n ? '1' : '0.25'; });
-}
-
-function submitReview(pid) {
-  const name = document.getElementById('rev-name-' + pid)?.value?.trim();
-  const text = document.getElementById('rev-text-' + pid)?.value?.trim();
-  if (!name || !text) { showNotification('Please fill name and review', ''); return; }
-  const stars = (window._reviewStars || {})[pid] || 5;
-  const key = 'reviews_' + pid;
-  const existing = JSON.parse(localStorage.getItem(key) || '[]');
-  existing.unshift({ author: name, stars, text, date: new Date().toLocaleDateString('en-IN') });
-  localStorage.setItem(key, JSON.stringify(existing));
-  showNotification('✓ Review posted! Thank you', 'success');
-  const p = (window.allProducts || []).find(x => x.id === pid);
-  if (p) renderProductReviews(p);
 }
 
 function renderRelatedProducts(p) {
@@ -7024,22 +7053,6 @@ function openProduct(productId) {
       </div>
     </div>
   </div>
-  <!-- Reviews -->
-  <div style="max-width:1200px;margin:0 auto;padding:36px 40px 60px;border-top:1px solid rgba(122,144,168,0.15);margin-top:20px;">
-    <h3 style="font-family:'Cormorant Garamond',serif;font-size:24px;color:#111;margin-bottom:18px;">Reviews (${reviews.length})</h3>
-    <div id="pd-rev-list">
-      ${reviews.length?reviews.map(r=>`<div style="background:#fff;border:1px solid rgba(122,144,168,0.15);border-radius:12px;padding:14px 18px;margin-bottom:10px;"><div style="display:flex;justify-content:space-between;margin-bottom:5px;"><span style="font-weight:700;font-size:13px;color:#111;">👤 ${r.author}</span><span style="font-size:11px;color:#888;">${r.date}</span></div><div style="color:#A68A69;font-size:13px;margin-bottom:4px;">${'⭐'.repeat(r.stars)}</div><p style="font-size:13px;color:#555;">${r.text}</p></div>`).join(''):'<p style="color:#888;font-style:italic;margin-bottom:16px;">No reviews yet. Be the first!</p>'}
-    </div>
-    <div style="background:rgba(122,144,168,0.06);border-radius:12px;padding:20px;margin-top:16px;">
-      <h4 style="font-family:'Cormorant Garamond',serif;font-size:20px;color:#111;margin-bottom:12px;">Write a Review</h4>
-      <div style="display:flex;gap:4px;margin-bottom:10px;">
-        ${[1,2,3,4,5].map(n=>`<button id="pdsr${n}" onclick="setPdStar(${n},'${p.id}')" style="background:none;border:none;font-size:22px;cursor:pointer;">⭐</button>`).join('')}
-      </div>
-      <input type="text" id="pd-rev-name" placeholder="Your Name" style="width:100%;background:#fff;border:1.5px solid rgba(122,144,168,0.2);color:#111;padding:10px 14px;border-radius:50px;font-size:13px;outline:none;margin-bottom:8px;font-family:inherit;">
-      <textarea id="pd-rev-text" rows="3" placeholder="Share your experience..." style="width:100%;background:#fff;border:1.5px solid rgba(122,144,168,0.2);color:#111;padding:10px 14px;border-radius:12px;font-size:13px;outline:none;resize:vertical;margin-bottom:10px;font-family:inherit;"></textarea>
-      <button onclick="submitPdReview('${p.id}')" style="background:#48596B;color:#fff;border:none;padding:10px 22px;border-radius:50px;font-size:12px;font-weight:700;cursor:pointer;letter-spacing:1px;">Post Review ⭐</button>
-    </div>
-  </div>
   <!-- Related -->
   <div id="pd-related" style="max-width:1200px;margin:0 auto;padding:0 40px 60px;"></div>
   </div>`;
@@ -7049,7 +7062,6 @@ function openProduct(productId) {
   ms.textContent = '@media(max-width:768px){.pd-resp{grid-template-columns:1fr!important;padding:20px!important;gap:28px!important;}}';
   document.head.appendChild(ms);
 
-  window._pdStars = 5;
   // Related
   const related = (window.allProducts||[]).filter(x=>x.id!==productId&&x.category===p.category).slice(0,4);
   const relEl = document.getElementById('pd-related');
@@ -7060,19 +7072,6 @@ function pdPickSize(btn,s){document.querySelectorAll('.pd-size-btn-new').forEach
 function pdPickColor(sw,name){document.querySelectorAll('.pd-color-sw-new').forEach(s=>s.style.border='3px solid transparent');sw.style.border='3px solid #48596B';window._selColor=name;const el=document.getElementById('pd-sel-color');if(el)el.textContent=name;}
 function pdAddToCart(){const p=window._curProd;if(!p)return;if(p.sizes&&p.sizes.length&&!window._selSize){showNotification('Please select a size','');return;}addToCart(p,window._selSize||'',window._selColor||'');}
 function pdBuyNow(wa){const p=window._curProd;if(!p)return;if(!window.currentUser){window._pendingBuyNow={pid:p.id,wa};showBuyNowPrompt(p,wa);return;}openWA(p,wa,window._selSize,window._selColor);}
-function setPdStar(n,pid){window._pdStars=n;[1,2,3,4,5].forEach(i=>{const b=document.getElementById('pdsr'+i);if(b)b.style.opacity=i<=n?'1':'0.3';});}
-function submitPdReview(pid){
-  const name=document.getElementById('pd-rev-name')?.value?.trim();
-  const text=document.getElementById('pd-rev-text')?.value?.trim();
-  if(!name||!text){showNotification('Fill name and review','');return;}
-  const key='rev_'+pid;const ex=JSON.parse(localStorage.getItem(key)||'[]');
-  ex.unshift({author:name,stars:window._pdStars||5,text,date:new Date().toLocaleDateString('en-IN')});
-  localStorage.setItem(key,JSON.stringify(ex));
-  showNotification('✓ Review posted!','success');
-  const list=document.getElementById('pd-rev-list');
-  if(list)list.innerHTML=ex.map(r=>`<div style="background:#fff;border:1px solid rgba(122,144,168,0.15);border-radius:12px;padding:14px 18px;margin-bottom:10px;"><div style="display:flex;justify-content:space-between;margin-bottom:5px;"><span style="font-weight:700;font-size:13px;color:#111;">👤 ${r.author}</span><span style="font-size:11px;color:#888;">${r.date}</span></div><div style="color:#A68A69;font-size:13px;margin-bottom:4px;">${'⭐'.repeat(r.stars)}</div><p style="font-size:13px;color:#555;">${r.text}</p></div>`).join('');
-  document.getElementById('pd-rev-name').value='';document.getElementById('pd-rev-text').value='';
-}
 function zoomImg(src){if(!src)return;const m=document.createElement('div');m.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,0.92);z-index:99999;display:flex;align-items:center;justify-content:center;cursor:zoom-out;';m.innerHTML=`<img src="${src}" style="max-width:90vw;max-height:90vh;object-fit:contain;border-radius:8px;">`;m.onclick=()=>m.remove();document.body.appendChild(m);}
 
 // ══════════════════════════════════════════════
@@ -7115,35 +7114,10 @@ function applyFounderToPage(f) {
 window.addEventListener('load', () => setTimeout(applyLogoFromFirebase, 800));
 
 // ══════════════════════════════════════════════
-// FIX 7: SHOP FILTER — properly working
-// ══════════════════════════════════════════════
-function applyShopFilters() {
-  let prods = window.allProducts||[];
-  const cat = document.querySelector('input[name="filter-cat"]:checked')?.value||'';
-  const search = (document.getElementById('shop-search-input')||document.getElementById('shop-search'))?.value?.toLowerCase()||'';
-  const sort = (document.getElementById('sort-select')||document.getElementById('sort-sel'))?.value||'';
-  const maxP = parseInt((document.getElementById('price-filter-range')||document.getElementById('price-range'))?.value||10000);
-  const saleOnly = (document.getElementById('sale-only-check')||document.getElementById('f-sale'))?.checked;
-  const selSizes = Array.from(document.querySelectorAll('.size-filter-btn.active, .fsz-btn.active')).map(b=>b.dataset.size||b.textContent.trim());
-
-  if (cat) prods=prods.filter(p=>p.category===cat);
-  if (search) prods=prods.filter(p=>(p.name||'').toLowerCase().includes(search)||(p.subcategory||'').toLowerCase().includes(search));
-  if (selSizes.length) prods=prods.filter(p=>p.sizes&&selSizes.some(s=>Array.isArray(p.sizes)?p.sizes.includes(s):p.sizes.includes(s)));
-  prods=prods.filter(p=>(parseFloat(p.price)||0)<=maxP);
-  if (saleOnly) prods=prods.filter(p=>p.originalPrice&&p.originalPrice>p.price);
-  if (sort==='price-asc') prods.sort((a,b)=>a.price-b.price);
-  else if (sort==='price-desc') prods.sort((a,b)=>b.price-a.price);
-  else if (sort==='new') prods.sort((a,b)=>new Date(b.createdAt||0)-new Date(a.createdAt||0));
-  else if (sort==='disc') prods.sort((a,b)=>{const da=a.originalPrice?(a.originalPrice-a.price)/a.originalPrice:0;const db=b.originalPrice?(b.originalPrice-b.price)/b.originalPrice:0;return db-da;});
-
-  const grid = document.getElementById('shop-products-grid')||document.getElementById('shop-grid');
-  const count = document.getElementById('shop-count-text')||document.getElementById('shop-count');
-  if (count) count.textContent = prods.length+' product'+(prods.length!==1?'s':'')+' found';
-  if (grid) grid.innerHTML = prods.length ? prods.map(renderProductCard).join('') : '<div style="grid-column:1/-1;text-align:center;padding:60px 20px;color:#888;font-family:Cormorant Garamond,serif;font-size:20px;font-style:italic;">No products found<small style="display:block;font-family:Montserrat,sans-serif;font-size:12px;margin-top:8px;">Try clearing filters</small></div>';
-}
-// Override old filter fn
-function filterShopProducts() { applyShopFilters(); }
-
+// FIX 7: SHOP FILTER — the working applyShopFilters() defined earlier
+// (using the real element IDs shop-search / shop-sort / price-max-range /
+// filter-sale-only plus colour + size filters) is the one in effect.
+// The previous broken duplicate here was removed so it no longer overrode it.
 // ══════════════════════════════════════════════
 // FIX 8: CATEGORY PHOTOS — show in cards
 // ══════════════════════════════════════════════
@@ -7431,42 +7405,97 @@ async function handleCategoryImage(input) {
   }catch(e){showNotification('Upload failed','');}
 }
 
-// ── CHANGE PASSWORD ──
+// ── CHANGE ADMIN PASSWORD ──
+// Password changes are now handled by Firebase Auth.
+// Use: Firebase Console → Authentication → your admin account → Reset password
+// Or call window.firebaseFns.sendPasswordResetEmail(window.firebaseAuth, ADMIN_EMAIL)
 function changeAdminPassword() {
-  const curr=document.getElementById('curr-pass')?.value?.trim();
-  const newP=document.getElementById('new-pass')?.value?.trim();
-  const conf=document.getElementById('confirm-pass')?.value?.trim();
-  const msg=document.getElementById('pass-change-msg');
-  const show=(txt,color)=>{if(msg){msg.textContent=txt;msg.style.color=color;msg.style.background=color==='#22c55e'?'rgba(34,197,94,0.1)':'rgba(229,57,53,0.1)';msg.style.padding='10px 14px';msg.style.borderRadius='8px';setTimeout(()=>{msg.textContent='';msg.style.background='';msg.style.padding='';},6000);}};
-  const savedPass=localStorage.getItem('yw-admin-pass')||'YOURWONDERLAND.11';
-  if(!curr){show('✗ Current password daakho','#e53935');return;}
-  if(curr!==savedPass){show('✗ Current password galat che!','#e53935');return;}
-  if(!newP||newP.length<6){show('✗ New password minimum 6 characters joie','#e53935');return;}
-  if(newP!==conf){show('✗ Passwords match nathi thata!','#e53935');return;}
-  localStorage.setItem('yw-admin-pass',newP);
-  document.getElementById('curr-pass').value='';
-  document.getElementById('new-pass').value='';
-  document.getElementById('confirm-pass').value='';
-  show('✓ Password change thayo! Avar thi new password thi login thase.','#22c55e');
-  showNotification('✓ Password successfully changed!','success');
+  if(!window.firebaseAuth || !window.firebaseFns?.sendPasswordResetEmail){
+    showNotification('Firebase not ready. Please try again.', '');
+    return;
+  }
+  window.firebaseFns.sendPasswordResetEmail(window.firebaseAuth, ADMIN_EMAIL)
+    .then(()=> showNotification('✓ Password reset email sent to ' + ADMIN_EMAIL, 'success'))
+    .catch(e => showNotification('Error: ' + e.message, ''));
 }
 
-// ── ADMIN LOGIN — uses saved password ──
-function adminLogin() {
-  const u=document.getElementById('admin-username')?.value?.trim();
-  const p=document.getElementById('admin-password')?.value?.trim();
-  const err=document.getElementById('admin-login-error');
-  const savedPass=localStorage.getItem('yw-admin-pass')||'YOURWONDERLAND.11';
-  if(u==='your.wonderland'&&p===savedPass){
-    localStorage.setItem('yw-admin','1');
-    document.getElementById('admin-login-screen').style.display='none';
+// ── ADMIN LOGIN — Firebase Auth + persistent brute-force guard ──
+async function adminLogin() {
+  const email = document.getElementById('admin-username')?.value?.trim();
+  const pass  = document.getElementById('admin-password')?.value?.trim();
+  const err   = document.getElementById('admin-login-error');
+  const btn   = document.querySelector('#admin-login-screen .admin-btn');
+  const showErr = msg => { if(err){ err.textContent = msg; setTimeout(()=>{ err.textContent=''; },4000); } };
+
+  // Always wipe old bypassable localStorage flags on every login attempt
+  localStorage.removeItem('yw-admin');
+  localStorage.removeItem('yw-admin-pass');
+
+  // 1. Lockout check — read from persistent storage so page refresh can't bypass it
+  const rl = _getRateLimit();
+  _adminAttempts    = rl.attempts;
+  _adminLockedUntil = rl.lockedUntil;
+
+  if (Date.now() < _adminLockedUntil) {
+    const minsLeft = Math.ceil((_adminLockedUntil - Date.now()) / 60000);
+    showErr(`Too many attempts. Try again in ${minsLeft} min.`);
+    return;
+  }
+
+  if (!email || !pass) { showErr('Please enter email and password.'); return; }
+
+  // 2. Only allow login for the designated admin email
+  if (email.toLowerCase() !== ADMIN_EMAIL.toLowerCase()) {
+    _adminAttempts++;
+    const lockedUntil = _adminAttempts >= ADMIN_MAX_ATTEMPTS ? Date.now() + ADMIN_LOCKOUT_MS : _adminLockedUntil;
+    if (_adminAttempts >= ADMIN_MAX_ATTEMPTS) _adminAttempts = 0;
+    _setRateLimit({ attempts: _adminAttempts, lockedUntil });
+    showErr('Invalid credentials.');
+    return;
+  }
+
+  if(btn) { btn.disabled = true; btn.textContent = 'Verifying…'; }
+  try {
+    // 3. Firebase Auth sign-in
+    const { signInWithEmailAndPassword } = window.firebaseFns;
+    const cred = await signInWithEmailAndPassword(window.firebaseAuth, email, pass);
+
+    // 4. Double-check UID matches the configured admin account
+    if (cred.user.uid !== ADMIN_UID) {
+      await window.firebaseFns.signOut(window.firebaseAuth);
+      _adminAttempts++;
+      const lockedUntil = _adminAttempts >= ADMIN_MAX_ATTEMPTS ? Date.now() + ADMIN_LOCKOUT_MS : _adminLockedUntil;
+      if (_adminAttempts >= ADMIN_MAX_ATTEMPTS) _adminAttempts = 0;
+      _setRateLimit({ attempts: _adminAttempts, lockedUntil });
+      showErr('Access denied.');
+      return;
+    }
+
+    // 5. Success — clear rate limit & open admin panel
+    _clearRateLimit();
+    document.getElementById('admin-login-screen').style.display = 'none';
     document.getElementById('admin-layout').classList.add('active');
-    const dd=document.getElementById('admin-topbar-date');if(dd)dd.textContent=new Date().toLocaleString('en-IN');
+    const dd = document.getElementById('admin-topbar-date');
+    if(dd) dd.textContent = new Date().toLocaleString('en-IN');
     loadAdminDashboard();
-  }else{if(err){err.textContent='Invalid credentials';setTimeout(()=>err.textContent='',3000);}}
+
+  } catch(e) {
+    _adminAttempts++;
+    const lockedUntil = _adminAttempts >= ADMIN_MAX_ATTEMPTS ? Date.now() + ADMIN_LOCKOUT_MS : _adminLockedUntil;
+    if (_adminAttempts >= ADMIN_MAX_ATTEMPTS) _adminAttempts = 0;
+    _setRateLimit({ attempts: _adminAttempts, lockedUntil });
+    const remaining = ADMIN_MAX_ATTEMPTS - _adminAttempts;
+    showErr(remaining > 0 ? `Invalid credentials. ${remaining} attempt(s) left.` : 'Account locked for 15 min.');
+  } finally {
+    if(btn) { btn.disabled = false; btn.textContent = 'Access Admin Panel'; }
+  }
 }
 
 function adminLogout(){
+  // Sign out of Firebase Auth so the session is truly ended on the server
+  if(window.firebaseAuth && window.firebaseFns?.signOut){
+    window.firebaseFns.signOut(window.firebaseAuth).catch(()=>{});
+  }
   localStorage.removeItem('yw-admin');
   document.getElementById('admin-login-screen').style.display='flex';
   document.getElementById('admin-layout').classList.remove('active');
@@ -7478,13 +7507,32 @@ function openAdminPage(){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.getElementById('main-footer').style.display='none';
   document.getElementById('navbar').style.display='none';
-  const ap=document.getElementById('admin-page');ap.style.display='flex';ap.classList.add('active');
-  if(localStorage.getItem('yw-admin')==='1'){
-    document.getElementById('admin-login-screen').style.display='none';
-    document.getElementById('admin-layout').classList.add('active');
-    const dd=document.getElementById('admin-topbar-date');if(dd)dd.textContent=new Date().toLocaleString('en-IN');
-    loadAdminDashboard();
-  }else{document.getElementById('admin-login-screen').style.display='flex';document.getElementById('admin-layout').classList.remove('active');}
+  const ap=document.getElementById('admin-page');
+  ap.style.display='flex'; ap.classList.add('active');
+
+  // Use onAuthStateChanged so this works even right after a page reload
+  // (Firebase resolves auth state async — onAuthStateChanged fires once immediately)
+  if(!window.firebaseAuth || !window.firebaseFns?.onAuthStateChanged){
+    // Firebase not ready yet — show login
+    document.getElementById('admin-login-screen').style.display='flex';
+    document.getElementById('admin-layout').classList.remove('active');
+    return;
+  }
+  const unsub = window.firebaseFns.onAuthStateChanged(window.firebaseAuth, user => {
+    unsub(); // unsubscribe after first call — we only need the current state
+    if(user && user.uid === ADMIN_UID){
+      // Verified admin — open the panel
+      document.getElementById('admin-login-screen').style.display='none';
+      document.getElementById('admin-layout').classList.add('active');
+      const dd=document.getElementById('admin-topbar-date');
+      if(dd) dd.textContent=new Date().toLocaleString('en-IN');
+      loadAdminDashboard();
+    } else {
+      // Not signed in or not the admin account
+      document.getElementById('admin-login-screen').style.display='flex';
+      document.getElementById('admin-layout').classList.remove('active');
+    }
+  });
 }
 
 function switchAdminSection(section){
@@ -7492,13 +7540,14 @@ function switchAdminSection(section){
   event?.currentTarget?.classList.add('active');
   document.querySelectorAll('.admin-section').forEach(s=>s.classList.remove('active'));
   const secEl=document.getElementById('admin-'+section);if(secEl)secEl.classList.add('active');
-  const titles={dashboard:'Dashboard',products:'Products',categories:'Categories',customers:'Customers',orders:'Orders',banners:'Banners & Hero',storeinfo:'Store Info',founder:'About Founder',password:'Change Password'};
+  const titles={dashboard:'Dashboard',products:'Products',categories:'Categories',customers:'Customers',orders:'Orders',reports:'Reports',banners:'Banners & Hero',storeinfo:'Store Info',founder:'About Founder',password:'Change Password'};
   const te=document.getElementById('admin-section-title');if(te)te.textContent=titles[section]||section;
   if(section==='dashboard')loadAdminDashboard();
   if(section==='products')loadAdminProducts();
   if(section==='categories')loadAdminCategories();
   if(section==='customers')loadAdminCustomers();
   if(section==='orders')loadAdminOrders();
+  if(section==='reports')loadReport('daily');
   if(section==='banners')loadBannersForm();
   if(section==='storeinfo')loadStoreInfo();
   if(section==='founder')loadFounderSettings();
